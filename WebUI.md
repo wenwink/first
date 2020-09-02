@@ -337,9 +337,238 @@
 
 ​	2）div是块级标签；span是行内标签
 
-## 0902——表单、Html5其他标记
+## 0902——表单、Html5其他标记、head中的子标记
 
+### 1. 表单
 
+​	**【要求】掌握标记和理解属性**
+
+​	1）收集用户信息，和用户的交互，比如登录、注册、搜索、按钮
+
+​	2）表单标记
+
+~~~html
+<form method="get|post" action="url" target="" enctype="">
+    <!-- 表单元素 -->
+</form>
+~~~
+
+~~~
+method  --  表单的提交方式
+			get ： url?表单元素名=值&表单元素名=值&...       表单元素值和url一起提交到服务器端
+			post： 表单元素值单独发送到服务器端			   安全性更高
+action  --  表单提交位置
+			表单中点击“提交”按钮，页面将发生跳转，跳转到 action所指向的url页面
+			如果有“提交”按钮，但是action没有设置该属性，则跳转到本页面
+enctype --  表单中有文件上传，必须设置该属性，而且属性值为 "multipart/form-data"
+~~~
+
+​	3）表单元素标记
+
+**【切记】除“按钮”外，其他表单元素必须设置 “name”属性** -- 服务器端依赖name属性值获取表单元素值
+
+-- input 标记：单行输入文本域、密码域、单选按钮、多选按钮、文件域、按钮
+
+​				h5 - input的type增加了更多的属性值，主要约束数据类型，限制数据格式
+
+​				【**为一组的radio或者checkbox，name属性值必须相同，每个元素必须设置value**】
+
+​				【value属性设置默认值或者选中本项的值】
+
+~~~html
+主要属性 ：
+	type ： 设置input表单元素的类型，默认是单行输入文本域
+			text	默认值 
+			password
+			hidden	隐藏域，页面不显示该元素，但是该元素的value值可以提交到服务器端
+			radio		单选按钮 ，可以使用属性 checked
+			checkbox	多选按钮 ，可以使用属性 checked
+			file		文件域
+			button		普通按钮 -- 结合js一起使用
+			submit		提交按钮 -- 表单提交
+			reset		重置按钮 -- 表单恢复初始状态
+			image		图像提交按钮，必须搭配src属性一起使用
+			------------------------
+			email
+			url
+			tel
+			number		可以使用属性 min 与  max
+			color		提交的属性值是 #rrggbb
+			search
+			range
+			date、time、datetime、datetime-local、month、week【第三方插件日期选择】
+			
+	  value :
+	  		设置值
+	  checked ：
+	  		单选和复选使用，初始时选中			
+~~~
+
+~~~html
+其他属性 ：
+		placeholder="提示信息"
+		readonly	只读状态，可以获取焦点
+		disabled	禁用状态【外观灰掉】，不能获取焦点，而且该表单元素的值不会提交到服务器端
+		required	要求该项必填
+		autocomplete="on|off"	浏览器是否记录客户输入的内容
+~~~
+
+-- select标记：下拉菜单、列表
+
+​		结合option标记一起使用，使用option设置菜单或者列表项
+
+​		 optgroup标记 将option分组 , 使用属性 label
+
+~~~html
+select 默认实现 下拉菜单
+	   如果做列表，搭配属性 multiple ， 可以同时设置页面初始显示项 size
+option 标记
+		<option value="">文本</option>
+		如果不设置value属性，提交的值同页面显示值
+		可以设置属性 selected
+~~~
+
+-- textarea标记：多行文本域【富文本编辑器--第三方插件】
+
+~~~html
+<textarea cols="" rows="">默认值</textarea>
+~~~
+
+-- button标记：按钮
+
+~~~html
+<button type="submit(默认)|reset|button">文本</button>
+~~~
+
+-- datalist 为 input输入框提供值选择列表
+
+~~~html
+<input type="text" name="searchFrom" list="searchData">
+<datalist id="searchData">
+<option value="Baidu">百度</option>
+<option value="Sousou">搜搜</option>
+<option value="Google">谷歌</option>
+</datalist>
+~~~
+
+-- 【了解】fieldset + legend  标记 ：为表单提供边框和标题
+
+~~~
+<form>
+	<fieldset>
+		<legend>标题</lengend>
+	<表单元素>
+	</fieldset>
+</form>
+~~~
+
+-- label 标签使用for属性关联表单元素，要求被关联的表单元素提供id属性
+
+~~~html
+<p>
+    <label for="loginName">账号</label>
+    <input type="text" name="name" id="loginName" required />
+</p>
+~~~
+
+### 2. html5新增一些标记
+
+​	1）表示结构的块级标记
+
+​		**header、footer、nav**、hgroup、article、section、aside
+
+​	2）figure 与 figcaption
+
+​		区域划分，并且添加标题
+
+~~~html
+    <figure>
+        <figcaption>这是一个男性猴子</figcaption>
+        <img src="../assets/imgs/male.jpg" /> <!-- 多媒体资源引入 -->
+    </figure>
+~~~
+
+​	3）details与summery
+
+~~~html
+<details>
+        <summary>SSM</summary>
+        <ul>
+            <li>Spring</li>
+            <li>Spring Web MVC</li>
+            <li>MyBatis</li>
+        </ul>
+    </details>
+~~~
+
+​	4）中文添加拼音
+
+~~~html
+<ruby>
+	饕<rp>(</rp><rt>tāo</rt><rp>)</rp>
+	餮<rp>(</rp><rt>tiè</rt><rp>)</rp>
+</ruby>
+~~~
+
+​	5）其他部分
+
+~~~html
+<dialog open>这是打开的对话窗口</dialog><!--支持性不好-->
+<mark>标记：内容会有黄色底背景</mark> <br />
+<progress max="100" value="10"></progress><br />
+<meter min="0" max="100" value="30"></meter><br />
+<time>2017-03-10</time>
+<wbr></wbr> <!-- 安全换行 -->
+~~~
+
+### 3. head内部的子标记
+
+​	1）title
+
+​	2）style  -- css样式
+
+​	3）script -- 可以出现在head或者body中，设置js代码，或者引入外部js文件
+
+​	4）link -- 引入外部css样式文件
+
+​	5）base标记
+
+​		设置本页面中所有**相对路径**的基础路径--将所有相对路径前面添加 base标记所设置的url部分
+
+~~~html
+<base href="http://www.isoft.com/" target="_blank">
+...
+<body>
+	<a href="user/base.html">个人中心</a>    
+	<!-- 链接的网址是 http://www.isoft.com/user/base.html -->
+~~~
+
+​	6）meta标记 -- 设置元信息
+
+​	META 元素通常用于指定网页的描述，关键词，文件的最后修改时间，作者，和其他元数据。
+
+​	元数据可以使用于浏览器（如何显示内容或重新加载页面），搜索引擎（关键词），或其他Web服务。
+
+~~~html
+实例 1 - 定义文档关键词，用于搜索引擎：
+<meta name="keywords" content="HTML, CSS, XML, XHTML, JavaScript">
+
+实例 2 - 定义web页面描述：
+<meta name="description" content="Free Web tutorials on HTML and CSS">
+
+实例 3 - 定义页面作者：
+<meta name="author" content="Hege Refsnes">
+
+实例 4 - 每30秒刷新页面：
+<meta http-equiv="refresh" content="30">
+
+实例 5 - 页面编码设置
+<meta charset="UTF-8" />
+~~~
+
+明日提交作业——超链接练习+表单练习
+
+## 0903——CSS
 
 
 
